@@ -25,10 +25,14 @@ Element wrapper for the `marked` (http://marked.org/) library.
 
     text: '',
 
-    attached: function() {
+    created: function() {
       marked.setOptions({
-        highlight: this.highlight.bind(this)
+        highlight: this.highlight.bind(this),
+        sanitize: true
       });
+    },
+
+    attached: function() {
       if (!this.text) {
         this.text = this.innerHTML;
       }
