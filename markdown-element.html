@@ -8,29 +8,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="marked-import.html">
+<link rel="import" href="markdown-import.html">
 
 <!--
-Element wrapper for the `marked` (http://marked.org/) library.
+Element wrapper for the `markdown-it` (https://markdown-it.github.io/) library.
 
-@class marked-element
-@blurb Element wrapper for the marked library.
+@class markdown-element
+@blurb Element wrapper for the markdown-it library.
 @status alpha
-@snap snap.png
 -->
-<polymer-element name="marked-element" attributes="text">
+<polymer-element name="markdown-element" attributes="text inline">
 <script>
-
-  Polymer('marked-element', {
-
+(function() {
+  var md = window.markdownit();
+  
+  Polymer('markdown-element', {
     text: '',
-
-    created: function() {
-      marked.setOptions({
-        highlight: this.highlight.bind(this),
-        sanitize: true
-      });
-    },
+    inline: false,
 
     attached: function() {
       if (!this.text) {
@@ -39,16 +33,14 @@ Element wrapper for the `marked` (http://marked.org/) library.
     },
 
     textChanged: function () {
-      this.innerHTML = marked(this.text);
-    },
-
-    highlight: function(code, lang) {
-      var event = this.fire('marked-js-highlight', {code: code, lang: lang});
-      return event.detail.code || code;
+      if (this.inline) {
+        this.innerHTML = md.renderInline(this.text);
+      } else {
+        this.innerHTML = md.render(this.text);
+      }
     }
-
   });
-
+});
 </script>
 </polymer-element>
 
