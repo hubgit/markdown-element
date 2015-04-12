@@ -1,5 +1,5 @@
 {
-  "name": "marked-element",
+  "name": "markdown-element",
   "dependencies": {
     "markdown-it": "markdown-it/markdown-it#^4.0.1",
     "polymer": "Polymer/polymer#^0.5.4"
